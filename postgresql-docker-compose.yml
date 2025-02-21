@@ -1,0 +1,26 @@
+services:
+  postgresql-db:
+    # Apple M1 Chip
+    platform: linux/amd64
+    image: postgres:14.8
+    container_name: postgresql-db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "Passw0rd1234"
+    ports:
+      - 5434:5432
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+    volumes:     
+      - postgresql_datadir:/var/lib/postgresql/data
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge
+
+volumes:
+  postgresql_datadir:
